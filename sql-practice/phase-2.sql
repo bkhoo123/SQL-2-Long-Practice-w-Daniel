@@ -1,35 +1,35 @@
 PRAGMA foreign_keys=on; -- Turns foreign key support in SQLite3 on
 -- Your code here
-DROP TABLE owners;
-DROP TABLE cats;
 DROP TABLE cat_owners;
 DROP TABLE toys;
+DROP TABLE owners;
+DROP TABLE cats;
 
 CREATE TABLE owners (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   first_name VARCHAR(20),
-  last_name VARCHAR(20) 
+  last_name VARCHAR(20)
 );
 
 CREATE TABLE cats (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
-  name VARCHAR(30),
+  cat_name VARCHAR(30),
   birth_year INTEGER
 );
 
 CREATE TABLE cat_owners (
-  owner_id INTEGER, 
+  owner_id INTEGER,
   cat_id INTEGER,
-  FOREIGN KEY (owner_id) REFERENCES owners(id),
-  FOREIGN KEY (cat_id) REFERENCES cats(id)
+  FOREIGN KEY (owner_id) REFERENCES owners(id) ON DELETE CASCADE,
+  FOREIGN KEY (cat_id) REFERENCES cats(id) ON DELETE CASCADE
 );
-
 CREATE TABLE toys (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
-  name VARCHAR(30),
+  toy_name VARCHAR(30),
   cat_id INTEGER,
-  FOREIGN KEY (cat_id) REFERENCES cats(id)
+  FOREIGN KEY (cat_id) REFERENCES cats(id) ON DELETE CASCADE
 );
+
 
 
 INSERT INTO owners
@@ -44,7 +44,7 @@ VALUES
   ('Hermione', 'Granger');
 
 INSERT INTO cats
-  (name, birth_year)
+  (cat_name, birth_year)
 VALUES
   ('Smudge', 2014),
   ('Molly', 2015),
@@ -69,7 +69,7 @@ VALUES
   (8, 7);
 
 INSERT INTO toys
-  (cat_id, name)
+  (cat_id, toy_name)
 VALUES
   (1, 'Catnip Mouse'),
   (2, 'Feather Wand'),
